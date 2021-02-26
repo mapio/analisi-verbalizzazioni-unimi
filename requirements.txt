@@ -1,0 +1,6 @@
+ipywidgets>=7.6.3
+jupyter>=1.0.0
+matplotlib>=3.3.4
+pandas>=1.2.2
+voila>=0.2.7
+xlrd>=2.0.1
