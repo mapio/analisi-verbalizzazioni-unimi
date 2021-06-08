@@ -28,7 +28,7 @@ iscrizioni = pd.read_excel(file_iscrizioni, dtype = {'Matricola': object})[['Mat
 
 storia = ( verbali[verbali.Insegnamento == nome_insegnamento]
             .merge(iscrizioni, on = 'Matricola', how = 'right')
-            .fillna('NI').groupby('Matricola').Esito
+            .fillna('').groupby('Matricola').Esito
             .agg(lambda _: ', '.join(_)) )
 storia.name = 'Storia'
 
