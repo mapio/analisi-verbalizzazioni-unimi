@@ -17,7 +17,7 @@ def vse2e(voto, stato_esito):
     if voto == '30 e lode': return '33'
     return voto
 
-verbali = pd.read_excel(file_verbali).apply(lambda _: pd.Series({
+verbali = pd.read_excel(file_verbali, dtype = {'Matricola': object}).apply(lambda _: pd.Series({
     'Insegnamento': _['Descrizione insegnamento'],
     'Appello': _['Data appello'],
     'Matricola': _['Matricola'],
