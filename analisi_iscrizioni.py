@@ -8,7 +8,7 @@ from sys import argv, exit
 import pandas as pd
 from tabulate import tabulate
 
-file_verbali, file_iscrizioni, nome_insegnamento = argv[1:]
+*file_verbali, file_iscrizioni, nome_insegnamento = argv[1:]
 
 def vse2e(voto, stato_esito):
     if stato_esito == 'Rifiutato': return '~' + voto
@@ -17,12 +17,15 @@ def vse2e(voto, stato_esito):
     if voto == '30 e lode': return '33'
     return voto
 
-verbali = pd.read_excel(file_verbali, dtype = {'Matricola': object}).apply(lambda _: pd.Series({
-    'Insegnamento': _['Descrizione insegnamento'],
-    'Appello': _['Data appello'],
-    'Matricola': _['Matricola'],
-    'Esito': vse2e(_['Voto'], _['Stato Esito'])
-}), axis = 1).sort_values('Appello')
+verbali = []
+for fv in file_verbali:
+  verbali.append(pd.read_excel(fv, dtype = {'Matricola': object}).apply(lambda _: pd.Series({
+      'Insegnamento': _['Descrizione insegnamento'],
+      'Appello': _['Data appello'],
+      'Matricola': _['Matricola'],
+      'Esito': vse2e(_['Voto'], _['Stato Esito'])
+  }), axis = 1).sort_values('Appello'))
+verbali = pd.concat(verbali)
 
 iscrizioni = pd.read_excel(file_iscrizioni, dtype = {'Matricola': object})[['Matricola', 'Cognome', 'Nome']].set_index('Matricola')
 
